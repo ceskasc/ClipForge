@@ -30,6 +30,7 @@ test('selected output formats apply to trim, rotate, convert and audio',()=>{
  assert.equal(normalizeOptions('trim',settings,range,metadata).format,'webm');
  assert.equal(normalizeOptions('rotate',settings,range,metadata).format,'webm');
  assert.equal(normalizeOptions('convert',settings,range,metadata).format,'webm');
+ assert.equal(normalizeOptions('compress',settings,range,metadata).format,'webm');
  assert.equal(normalizeOptions('audio',settings,range,metadata).format,'mp3');
  assert.deepEqual(normalizeOptions('trim',settings,range,metadata).options.trim,{start:10,end:24});
  const rotation=normalizeOptions('rotate',settings,range,metadata).options.video;

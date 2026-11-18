@@ -112,6 +112,7 @@ function drawSettings(){
     createSelect('format','chooseFormat',[['mp4','MP4'],['webm','WebM']],'formatNote');
   }
   if(state.tool==='compress'){
+    createSelect('format','chooseFormat',[['mp4','MP4'],['webm','WebM']]);
     createSelect('quality','chooseQuality',[
       ['high',t('qualityHigh')],['medium',t('qualityMedium')],['low',t('qualityLow')]
     ]);
@@ -142,7 +143,7 @@ function updateOutputSummary(){
     $('outputHelp').textContent=t('outputHelp');
   }else{
     let suffix=state.tool==='gif'?'GIF':state.tool==='audio'?state.settings.audioFormat.toUpperCase():
-      state.tool==='convert'||state.tool==='trim'||state.tool==='rotate'?state.settings.format.toUpperCase():'MP4';
+      ['convert','trim','rotate','compress'].includes(state.tool)?state.settings.format.toUpperCase():'MP4';
     $('outputSummary').textContent=suffix+' / '+formatTime(
       state.tool==='gif'||state.tool==='trim'?state.range.end-state.range.start:state.metadata.duration
     );
@@ -193,6 +194,7 @@ function updateTimeRange(){
 }
 function updateFileView(){
   const filled=Boolean(state.file);
+  $('timeline').hidden=!['trim','audio','gif'].includes(state.tool);
   $('dropZone').hidden=filled;
   $('loadedView').hidden=!filled;
   if(!filled)$('outputSummary').textContent=t('outputWaiting');
@@ -269,6 +271,7 @@ async function startJob(){
   if(state.busy||state.loading||!state.file||!state.metadata)return;
   if(state.tool==='gif'&&state.range.end-state.range.start>8.02){status(t('gifLimit'),'error');return;}
   state.busy=true;
+  $('cancelButton').disabled=false;
   const jobId=state.sequence;
   const abort=new AbortController();state.abortController=abort;
   const file=state.file,meta=state.metadata,tool=state.tool;
