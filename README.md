@@ -35,3 +35,7 @@ GitHub Pages must be enabled **once** in repository Settings → Pages → Build
 URL after publishing: https://ceskasc.github.io/ClipForge/
 
 © 2026 Sadık Can Çeşka. MIT.
+
+## First live release
+
+The first public release is version 0.1.0. Release checks cover in-browser WebM conversion, MP3 extraction, GIF generation, locale switching and mobile layout. Other codecs depend on native browser support. Successful CI verifies the implementation but does not guarantee every user-provided format is supported.
