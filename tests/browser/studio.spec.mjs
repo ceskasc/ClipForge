@@ -1,7 +1,15 @@
 import {test,expect} from '@playwright/test';
 import {resolve} from 'node:path';
+import {readFile} from 'node:fs/promises';
 
 const sample=resolve('tests/fixtures/sample.webm');
+async function downloadedBytes(page) {
+  const [download]=await Promise.all([
+    page.waitForEvent('download',{timeout:20000}),
+    page.locator('#download').click()
+  ]);
+  return new Uint8Array(await readFile(await download.path()));
+}
 async function upload(page){
   await page.goto('./');
   await page.locator('#fileInput').setInputFiles(sample);
@@ -33,11 +41,9 @@ test('reads video metadata and exports an actual WebM conversion',async({page})=
   await page.locator('#runButton').click();
   await expect(page.locator('#download')).toBeVisible({timeout:90000});
   await expect(page.locator('#download')).toHaveAttribute('download',/\.webm$/);
-  const size=await page.locator('#download').evaluate(async(el)=>{
-    const res=await fetch(el.href);
-    return (await res.arrayBuffer()).byteLength;
-  });
-  expect(size).toBeGreaterThan(3000);
+  const bytes=await downloadedBytes(page);
+  expect(bytes.byteLength).toBeGreaterThan(3000);
+  expect(Array.from(bytes.slice(0,4))).toEqual([0x1a,0x45,0xdf,0xa3]);
 });
 test('extracts audio to a real MP3 file',async({page})=>{
   await upload(page);
@@ -46,9 +52,11 @@ test('extracts audio to a real MP3 file',async({page})=>{
   await page.locator('#runButton').click();
   await expect(page.locator('#download')).toBeVisible({timeout:90000});
   await expect(page.locator('#download')).toHaveAttribute('download',/\.mp3$/);
-  const bytes=await page.locator('#download').evaluate(async(el)=>Array.from(new Uint8Array(await(await fetch(el.href)).arrayBuffer()).slice(0,16)));
-  expect(bytes.length).toBeGreaterThan(2);
-  expect(bytes.some(b=>b!==0)).toBe(true);
+  const bytes=await downloadedBytes(page);
+  expect(bytes.byteLength).toBeGreaterThan(1000);
+  const startsWithId3=String.fromCharCode(...bytes.slice(0,3))==='ID3';
+  const startsWithMpegSync=bytes[0]===0xff&&(bytes[1]&0xe0)===0xe0;
+  expect(startsWithId3||startsWithMpegSync).toBe(true);
 });
 test('exports a valid GIF with local video frames',async({page})=>{
   await upload(page);
@@ -58,9 +66,8 @@ test('exports a valid GIF with local video frames',async({page})=>{
   await page.locator('#opt-gifFps').selectOption('5');
   await page.locator('#runButton').click();
   await expect(page.locator('#download')).toBeVisible({timeout:90000});
-  const header=await page.locator('#download').evaluate(async(el)=>{
-    const array=new Uint8Array(await(await fetch(el.href)).arrayBuffer());
-    return String.fromCharCode(...array.slice(0,6));
-  });
+  const bytes=await downloadedBytes(page);
+  expect(bytes.byteLength).toBeGreaterThan(1000);
+  const header=String.fromCharCode(...bytes.slice(0,6));
   expect(header).toBe('GIF89a');
 });
