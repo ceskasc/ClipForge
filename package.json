@@ -1,0 +1,25 @@
+{
+  "name": "clipforge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A private-by-design, mobile-first video studio",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run test && node --check src/main.js && node --check src/engine.js && npm run build"
+  },
+  "dependencies": {
+    "mediabunny": "1.66.0",
+    "@mediabunny/mp3-encoder": "1.66.0",
+    "gifenc": "1.0.3"
+  },
+  "devDependencies": {
+    "vite": "6.3.6"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

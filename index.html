@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="tr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="ClipForge: Videolarını kes, MP4/WebM dönüştür, küçült, MP3 çıkar, GIF oluştur ve döndür. Ücretsiz, özel, doğrudan tarayıcıda.">
+<meta name="author" content="Sadık Can Çeşka">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-ancestors 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' blob: data:; media-src 'self' blob:; font-src 'self' https://ceskacan.com; connect-src 'self'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests">
+<title>ClipForge — Video, sadeleşti.</title>
+<link rel="canonical" href="https://ceskasc.github.io/ClipForge/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ceskasc.github.io/ClipForge/">
+<meta property="og:title" content="ClipForge — Video, sadeleşti.">
+<meta property="og:description" content="Tarayıcında çalışan, gizlilik odaklı video stüdyosu. Kes, dönüştür, sıkıştır, GIF ve MP3 üret.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="./mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/src/styles.css">
+<script type="module" src="/src/main.js"></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" class="svg-library" aria-hidden="true">
+  <symbol id="ic-film" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5"/></symbol>
+  <symbol id="ic-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 16v4h16v-4"/></symbol>
+  <symbol id="ic-cut" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m9 8 12 12M9 16 21 4"/></symbol>
+  <symbol id="ic-convert" viewBox="0 0 24 24"><path d="M4 7h16m-5-4 5 4-5 4M20 17H4m5-4-5 4 5 4"/></symbol>
+  <symbol id="ic-compress" viewBox="0 0 24 24"><path d="M3 8V3h5M16 3h5v5M3 16v5h5m8 0h5v-5M4 4l6 6m10-6-6 6M4 20l6-6m10 6-6-6"/></symbol>
+  <symbol id="ic-audio" viewBox="0 0 24 24"><path d="M8 19V5l12-2v13M8 19c0 3-7 3-7 0s7-3 7 0Zm12-3c0 3-7 3-7 0s7-3 7 0Z"/></symbol>
+  <symbol id="ic-gif" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m9 9 6 3-6 3z"/></symbol>
+  <symbol id="ic-rotate" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 1-2.4-6M20 3v6h-6"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="ic-external" viewBox="0 0 24 24"><path d="M6 18 18 6M8 6h10v10"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 2 20 6v6c0 6-4 9-8 10-4-1-8-4-8-10V6zM9 12l2 2 4-4"/></symbol>
+  <symbol id="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></symbol>
+  <symbol id="ic-moon" viewBox="0 0 24 24"><path d="M20 16A9 9 0 0 1 8 4a9 9 0 1 0 12 12Z"/></symbol>
+  <symbol id="ic-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+</svg>
+<a class="skip-link" href="#studio" data-i18n="skip">Stüdyoya geç</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="./" class="wordmark" aria-label="ClipForge ana sayfa"><span class="brand-symbol"><svg><use href="#ic-film"/></svg></span><span>ClipForge<span class="brand-point">.</span></span></a>
+    <nav class="header-nav" aria-label="Main navigation"><a href="#studio" data-i18n="navStudio">Stüdyo</a><a href="#principles" data-i18n="navWhy">Yaklaşım</a><a href="#faq" data-i18n="navFaq">SSS</a></nav>
+    <div class="header-actions">
+      <span class="online-indicator"><i aria-hidden="true"></i><span data-i18n="localIndicator">YEREL MOTOR</span></span>
+      <button id="themeSwitch" class="icon-button theme-switch" type="button" aria-label="Koyu temaya geç"><svg class="moon"><use href="#ic-moon"/></svg><svg class="sun"><use href="#ic-sun"/></svg></button>
+      <button id="langSwitch" class="icon-button locale-switch" type="button" aria-label="Switch to English">EN</button>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <p class="kicker"><span class="kicker-rule" aria-hidden="true"></span><span data-i18n="heroEyebrow">CESKACAN STUDIO / 003</span></p>
+      <h1 id="hero-title"><span data-i18n="heroLine">Video,</span><em data-i18n="heroEmphasis">sadeleşti.</em></h1>
+      <p class="hero-lead" data-i18n="heroLead">Kes, dönüştür, küçült ve paylaş. Gereksiz karmaşa olmadan, videonun tüm kontrolü sende.</p>
+      <div class="hero-actions"><a href="#studio" class="btn btn-primary"><span data-i18n="startNow">Stüdyoyu aç</span><svg><use href="#ic-arrow"/></svg></a><a class="minimal-link" href="https://ceskacan.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="backPortfolio">Portföyü görüntüle</span><svg><use href="#ic-external"/></svg></a></div>
+      <div class="hero-trust"><span><svg><use href="#ic-shield"/></svg><span data-i18n="trustLocal">Dosyaların cihazından çıkmaz</span></span><span class="trust-sep"></span><span data-i18n="trustFree">Ücretsiz · Üyelik yok</span></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="art-ring art-ring-1"></div><div class="art-ring art-ring-2"></div>
+      <div class="art-stage"><div class="art-stage-head"><span><i></i><i></i><i></i></span><span>CLIPFORGE / PREVIEW</span><span>● REC</span></div><div class="art-video"><span class="art-glow"></span><span class="art-mountain first"></span><span class="art-mountain second"></span><span class="art-play"><svg><use href="#ic-play"/></svg></span></div><div class="art-timeline"><div class="art-frames"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="art-select"></span><span class="art-handle"></span></div><div class="art-stage-bottom"><span>00:04.8 — 00:12.6</span><span>HD / 30 FPS</span></div></div>
+      <span class="art-tag art-tag-one">CUT / REFINE</span><span class="art-tag art-tag-two">EXPORT / 01</span>
+    </div>
+  </section>
+  <section class="separator wrap"><span>01 <b>/</b> SELECTED TOOLKIT</span><span>LOCAL FIRST <b>·</b> VIDEO ENGINE</span></section>
+  <section class="studio wrap" id="studio" aria-labelledby="studioHeading">
+    <div class="section-head"><div><p class="eyebrow" data-i18n="toolkitEyebrow">01 / ÇALIŞMA ALANI</p><h2 id="studioHeading" data-i18n="studioTitle">Bir stüdyo. Tüm temel işler.</h2></div><p class="section-side" data-i18n="studioSide">İşlemini seç, videonu ekle, sonucu indir. Hepsi burada.</p></div>
+    <div class="studio-grid">
+      <aside class="tool-panel" aria-label="Video tools">
+        <div class="tool-panel-header"><span data-i18n="toolsHeading">ARAÇLAR</span><span class="tool-count">06 TOOLS</span></div>
+        <div id="toolList" class="tool-list" role="group" aria-label="Video tools"></div>
+        <div class="tool-panel-footer"><span class="privacy-symbol"><svg><use href="#ic-shield"/></svg></span><p data-i18n="asidePrivacy">Dosyalar sunucuya gönderilmez. İşlem bu sekmede gerçekleşir.</p></div>
+      </aside>
+      <div class="editor-panel">
+        <div class="panel-top"><div><p class="eyebrow" data-i18n="stepInput">02 / DOSYA SEÇ</p><h3 id="editorTitle" data-i18n="editorTitle">Videonu içeri al.</h3></div><span id="toolSequence" class="panel-sequence">01 / 06</span></div>
+        <div id="dropZone" class="dropzone" role="group" aria-label="File upload">
+          <input type="file" id="fileInput" accept="video/*,.mp4,.mov,.webm,.mkv,.avi,.m4v" class="visually-hidden">
+          <div class="drop-icon"><svg><use href="#ic-upload"/></svg></div>
+          <h4 data-i18n="dropTitle">Videonu buraya sürükle.</h4>
+          <p data-i18n="dropText">veya cihazından bir video seç</p>
+          <button id="chooseFile" class="btn btn-dark" type="button"><span data-i18n="selectVideo">Video seç</span><svg><use href="#ic-arrow"/></svg></button>
+          <span class="drop-limits" data-i18n="dropFootnote">MP4 · MOV · WebM · MKV · 180 MB sınır</span>
+        </div>
+        <div id="loadedView" hidden>
+          <div class="file-meta"><div class="file-meta-icon"><svg><use href="#ic-film"/></svg></div><div class="file-meta-main"><strong id="fileName"></strong><span id="fileSpecs"></span></div><button id="changeFile" class="file-replace" type="button" data-i18n="changeVideo">Değiştir</button><button id="removeFile" class="icon-button remove-file" type="button" aria-label="Dosyayı kaldır"><svg><use href="#ic-x"/></svg></button></div>
+          <div class="video-frame"><video id="videoPreview" playsinline preload="metadata" controls></video><span class="video-corner-badge">LOCAL PREVIEW</span></div>
+          <div class="timeline">
+            <div class="timeline-heading"><span data-i18n="clipRange">KLİP ARALIĞI</span><span id="rangeDuration">00:00 / 00:00</span></div>
+            <div id="filmstrip" class="filmstrip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="range-controls">
+              <div class="range-group"><label for="startRange" data-i18n="startMark">Başlangıç</label><input id="startRange" type="range" min="0" max="1" step="0.1" value="0"><output id="startOut" for="startRange">00:00</output></div>
+              <div class="range-group"><label for="endRange" data-i18n="endMark">Bitiş</label><input id="endRange" type="range" min="0" max="1" step="0.1" value="1"><output id="endOut" for="endRange">00:00</output></div>
+            </div>
+          </div>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </div>
+      <aside class="export-panel">
+        <p class="eyebrow" data-i18n="stepSettings">03 / İNCE AYAR</p><h3 id="settingsTitle" data-i18n="settingsInitialTitle">Ayarlamaya başla.</h3><p id="settingsDescription" class="settings-desc" data-i18n="settingsInitialText">Bir araç seç ve videonu ekle. Seçenekler burada görünecek.</p>
+        <div id="options" class="options"></div>
+        <div class="output-summary"><span data-i18n="outputLabel">ÇIKTI BİLGİSİ</span><strong id="outputSummary" data-i18n="outputWaiting">Video bekleniyor</strong><p id="outputHelp" data-i18n="outputHelp">Dosyaların yalnızca cihazında işlenir.</p></div>
+        <button id="runButton" class="btn btn-primary run-button" type="button" disabled><span data-i18n="run">İşlemi başlat</span><svg><use href="#ic-arrow"/></svg></button>
+        <button id="cancelButton" class="btn btn-quiet cancel-button" type="button" hidden data-i18n="cancel">İptal et</button>
+        <div id="progressBox" class="progress-box" hidden><div class="progress-label"><span id="progressLabel" data-i18n="processing">İşleniyor</span><span id="progressValue">0%</span></div><progress id="progressBar" value="0" max="100"></progress></div>
+        <a id="download" class="btn btn-download" href="#" hidden download><svg><use href="#ic-download"/></svg><span data-i18n="download">Sonucu indir</span></a>
+        <div class="export-privacy"><svg><use href="#ic-shield"/></svg><span data-i18n="exportPrivacy">Özel tasarlandı. Sunucu yüklemesi yok.</span></div>
+      </aside>
+    </div>
+  </section>
+  <section class="principles wrap" id="principles"><div class="section-head"><div><p class="eyebrow">02 / PHILOSOPHY</p><h2 data-i18n="valuesTitle">Daha az arayüz.<em> Daha çok sonuç.</em></h2></div><p class="section-side" data-i18n="valuesLead">Yapmak istediğine odaklan. Gerisini araçlar halletsin.</p></div>
+    <div class="value-grid"><article><span>01 / PRIVACY</span><div class="value-icon"><svg><use href="#ic-shield"/></svg></div><h3 data-i18n="privacyTitle">Gerçekten sana ait.</h3><p data-i18n="privacyText">Dosyaların tarayıcıda kalır. Hesap, sunucu yüklemesi ve gizli analiz yok.</p></article><article><span>02 / ENGINEERING</span><div class="value-icon"><svg><use href="#ic-compress"/></svg></div><h3 data-i18n="qualityTitle">Gerçek işleme.</h3><p data-i18n="qualityText">Sadece adı değişen dosyalar değil; codec ve format uyumuna göre yeniden işlenen videolar.</p></article><article><span>03 / CONTROL</span><div class="value-icon"><svg><use href="#ic-cut"/></svg></div><h3 data-i18n="controlTitle">Kontrol sende.</h3><p data-i18n="controlText">Klip sınırını seç, çıktıyı belirle, ilerlemeyi izle ve istediğinde iptal et.</p></article></div>
+  </section>
+  <section class="faq wrap" id="faq"><div class="section-head"><div><p class="eyebrow">03 / GOOD TO KNOW</p><h2 data-i18n="faqTitle">Sık sorulanlar.</h2></div></div><div class="faq-grid"><details><summary data-i18n="faqQ1">Dosyalar sunucuya yükleniyor mu?</summary><p data-i18n="faqA1">Hayır. İşlemler cihazındaki tarayıcıda gerçekleşir; seçtiğin dosyayı bir sunucuya göndermiyoruz.</p></details><details><summary data-i18n="faqQ2">Her video formatı çalışır mı?</summary><p data-i18n="faqA2">Hayır. Dönüşüm için tarayıcının desteklediği decoder ve encoder gerekir. Desteklenmeyen formatlarda açık bir hata gösteririz.</p></details><details><summary data-i18n="faqQ3">Neden büyük videolar zaman alıyor?</summary><p data-i18n="faqA3">Özellikle yeniden kodlama cihazının işlemcisi, belleği ve donanım desteğiyle sınırlıdır. İşleme sırasında sekmeyi açık tut.</p></details></div></section>
+</main>
+<footer class="site-footer"><div class="wrap footer-inner"><a class="footer-logo" href="https://ceskacan.com/" target="_blank" rel="noopener noreferrer">ceskacan<span>.</span></a><span data-i18n="footerText">ClipForge · 2026 · Sadık Can Çeşka</span><div class="footer-links"><a href="https://github.com/ceskasc/ClipForge" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="#hero-title" data-i18n="backTop">YUKARI ↑</a></div></div></footer>
+<noscript><p class="noscript">ClipForge requires JavaScript to process videos locally.</p></noscript>
+</body></html>
