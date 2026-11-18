@@ -1,5 +1,7 @@
 import { TOOLS, L10N, formatTime, formatBytes, clampRange } from './i18n.js';
-import { inspectVideo, convertVideo, makeGif, MAX_FILE_SIZE } from './engine.js';
+const MAX_FILE_SIZE = 180 * 1024 * 1024;
+let enginePromise;
+const getEngine = () => enginePromise ||= import('./engine.js');
 
 const $ = id => document.getElementById(id);
 const state = {
@@ -223,6 +225,7 @@ async function addFile(file){
   status(t('isLoading'));
   try{
     if(!file.size||file.size>MAX_FILE_SIZE)throw new Error('file-too-large');
+    const {inspectVideo}=await getEngine();
     const meta=await inspectVideo(file);
     if(session!==state.sequence)return;
     state.file=file;state.metadata=meta;state.range={start:0,end:meta.duration};
@@ -282,6 +285,7 @@ async function startJob(){
         state.activeConversion=conversion;
         if(conversion&&abort.signal.aborted)void conversion.cancel();
       }};
+    const {makeGif,convertVideo}=await getEngine();
     const result=tool==='gif'?await makeGif({...options,video:$('videoPreview')}):await convertVideo(options);
     if(abort.signal.aborted||jobId!==state.sequence)throw new Error('cancelled');
     state.outputUrl=URL.createObjectURL(result.blob);
