@@ -1,0 +1,40 @@
+name: ClipForge · Browser E2E
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Install Chromium
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Create an original WebM audio/video fixture
+        run: |
+          mkdir -p tests/fixtures
+          ffmpeg -hide_banner -loglevel error -y -threads 2 \
+            -f lavfi -i testsrc2=size=320x180:rate=15 \
+            -f lavfi -i sine=frequency=550:sample_rate=48000 \
+            -t 2.5 -c:v libvpx -b:v 280k -c:a libopus -shortest \
+            tests/fixtures/sample.webm
+          test -s tests/fixtures/sample.webm
+      - name: Test real browser conversions
+        run: npm run test:browser
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clipforge-browser-diagnostics
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
