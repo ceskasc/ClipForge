@@ -1,4 +1,4 @@
-import { TOOLS, L10N, formatTime, formatBytes, clampRange, safeBase } from './i18n.js';
+import { TOOLS, L10N, formatTime, formatBytes, clampRange } from './i18n.js';
 import { inspectVideo, convertVideo, makeGif, MAX_FILE_SIZE } from './engine.js';
 
 const $ = id => document.getElementById(id);
@@ -193,7 +193,7 @@ function updateFileView(){
   const filled=Boolean(state.file);
   $('dropZone').hidden=filled;
   $('loadedView').hidden=!filled;
-  $('outputSummary').textContent=filled&&state.metadata?$('outputSummary').textContent:t('outputWaiting');
+  if(!filled)$('outputSummary').textContent=t('outputWaiting');
   if(!filled)return;
   $('fileName').textContent=state.file.name;
   const m=state.metadata;

@@ -55,7 +55,7 @@ export function normalizeOptions(tool,settings,range,metadata){
   if((tool==='trim'||tool==='gif')&&r.end-r.start<.1-1e-5)throw new Error('invalid-range');
   if(tool==='gif'&&r.end-r.start>GIF_MAX_SECONDS+.02)throw new Error('gif-too-long');
   const format=tool==='audio'?(settings.audioFormat==='wav'?'wav':'mp3'):
-    tool==='convert'?(settings.format==='webm'?'webm':'mp4'):'mp4';
+    ['convert','trim','rotate'].includes(tool)?(settings.format==='webm'?'webm':'mp4'):'mp4';
   const opts={tracks:'primary'};
   if(tool==='trim') {
     if(r.start>.001||r.end<duration-.001)opts.trim={...(r.start>.001?{start:r.start}:{}),...(r.end<duration-.001?{end:r.end}:{})};
