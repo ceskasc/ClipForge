@@ -13,8 +13,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      pages_enabled: \${{ steps.pages.outputs.enabled }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,34 +22,18 @@ jobs:
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Verify application
         run: npm run check
-      - name: GitHub Pages readiness
-        id: pages
-        env:
-          GH_TOKEN: \${{ github.token }}
-          REPO: \${{ github.repository }}
-        run: |
-          status=$(curl -sS -o /tmp/pages.json -w '%{http_code}' \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            "https://api.github.com/repos/$REPO/pages")
-          if [ "$status" = "200" ] && grep -Eq '"build_type" *: *"workflow"' /tmp/pages.json; then
-            echo 'enabled=true' >> "$GITHUB_OUTPUT"
-          else
-            echo 'enabled=false' >> "$GITHUB_OUTPUT"
-            echo "::warning::To publish ClipForge, enable GitHub Pages in Settings > Pages > Source: GitHub Actions."
-          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
       - name: Upload Pages artifact
-        if: steps.pages.outputs.enabled == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
   deploy:
     needs: build
-    if: needs.build.outputs.pages_enabled == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: \${{ steps.publish.outputs.page_url }}
+      url: ${{ steps.publish.outputs.page_url }}
     steps:
       - name: Publish site
         id: publish
